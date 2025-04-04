@@ -20,6 +20,16 @@
       font-family: 'Comic Sans MS', cursive, sans-serif;
     }
 
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .envelope-container.floating {
+      animation: float 3s ease-in-out infinite;
+    }
+
     .envelope-container {
       position: relative;
       width: 320px;
@@ -94,7 +104,7 @@
 </head>
 <body>
 
-<div class="envelope-container" onclick="toggleEnvelope()">
+<div class="envelope-container floating" onclick="toggleEnvelope()">
   <div class="envelope" id="envelope">
     <div class="flap"></div>
   </div>
@@ -109,9 +119,12 @@
 <script>
   function toggleEnvelope() {
     const envelope = document.getElementById('envelope');
+    const container = document.querySelector('.envelope-container');
     envelope.classList.toggle('open');
 
     if (envelope.classList.contains('open')) {
+      container.classList.remove('floating');
+
       // Explosão de confete
       confetti({
         particleCount: 100,
@@ -143,6 +156,8 @@
           }
         })();
       }, 200);
+    } else {
+      container.classList.add('floating');
     }
   }
 </script>
